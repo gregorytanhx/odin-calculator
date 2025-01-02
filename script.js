@@ -48,7 +48,9 @@ function numInput(event) {
     let num;
     switch(event.srcElement.id) {
         case "zero":
-            currNum += "0";
+            if (currNum.length > 0) {
+                currNum += '0';
+            }
             break;
         case "one":
            currNum += "1"; 
