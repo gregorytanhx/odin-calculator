@@ -83,6 +83,10 @@ function numInput(event) {
     document.querySelector(".screen").innerHTML = currNum;
 }
 
+function roundOff(num, dp) {
+    return Math.round(num * 10 ** dp) / (10 ** dp);
+}
+
 function operatorInput(event) {
     let operator;
     switch(event.srcElement.id) {
@@ -104,7 +108,8 @@ function operatorInput(event) {
         case "equals":
             equation.push(currNum);
             // display result and reset equation
-            document.querySelector('.screen').innerHTML = operate(equation);
+            let result = roundOff(operate(equation), 2);
+            document.querySelector('.screen').innerHTML = result;
             equation = new Array();
             currNum = "";
             return;
@@ -127,6 +132,7 @@ function clear() {
 
 var equation = new Array();
 var currNum = "";
+
 
 for (btn of document.getElementsByClassName("num-btn")) {
     btn.addEventListener("click", numInput);
