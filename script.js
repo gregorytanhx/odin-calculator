@@ -15,9 +15,20 @@ function divide(a, b) {
     return a / b;
 }   
 
-function operate(a, b, operator) {
-    a = Number(a);
-    b = Number(b); 
+function mod(a, b) {
+    return a % b;
+}
+
+function operate(equation) {
+    a = Number(equation[0]);
+    operator = equation[1];
+    b = Number(equation[2]);
+
+    // check for division by zero
+    if (operator == '/' && b == 0) {
+        return "ERROR";
+    }
+
     switch(operator) {
         case '+':
             return add(a, b);
@@ -27,6 +38,8 @@ function operate(a, b, operator) {
             return multiply(a, b);
         case '/':
             return divide(a, b);
+        case '%':  
+            return mod(a, b);
     }
 }
 
@@ -70,18 +83,62 @@ function numInput(event) {
     document.querySelector(".screen").innerHTML = currNum;
 }
 
+function operatorInput(event) {
+    let operator;
+    switch(event.srcElement.id) {
+        case "add":
+            operator = "+";
+            break;
+        case "subtract":
+            operator = "-";
+            break;
+        case "multiply":
+            operator = "*";
+            break;
+        case "divide":
+            operator = "/";
+            break;
+        case "mod":
+            operator = "%";
+            break;
+        case "equals":
+            equation.push(currNum);
+            // display result and reset equation
+            document.querySelector('.screen').innerHTML = operate(equation);
+            equation = new Array();
+            currNum = "";
+            return;
+    }
+    equation.push(currNum);
+    equation.push(operator);
+    currNum = "";
+}
+
+function allClear() {
+    currNum = "";
+    document.querySelector('.screen').innerHTML = currNum;
+}
+
+function clear() {
+    currNum = currNum.slice(0,-1);
+    document.querySelector('.screen').innerHTML = currNum;
+}
+
+
 var equation = new Array();
 var currNum = "";
 
-let numBtns = document.getElementsByClassName("num-btn");
-for (btn of numBtns) {
+for (btn of document.getElementsByClassName("num-btn")) {
     btn.addEventListener("click", numInput);
 };
 
-let operatorBtns = document.getElementsByClassName("operator-btn");
-let clearBtn = document.getElementById("clear-btn");
-let allClearBtn = document.getElementById("all-clear-btn");
-let modBtn = document.getElementById("mod-btn");
+for (btn of document.getElementsByClassName("operator-btn")) {
+    btn.addEventListener("click", operatorInput);
+};
+
+document.getElementById("clear").addEventListener("click", clear);
+document.getElementById('all-clear').addEventListener('click', allClear);
+
 
 
 
