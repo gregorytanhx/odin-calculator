@@ -19,6 +19,7 @@ function mod(a, b) {
     return a % b;
 }
 
+// TODO: add functionality to evaluate more complex equations
 function operate(equation) {
     a = Number(equation[0]);
     operator = equation[1];
@@ -111,7 +112,7 @@ function operatorInput(event) {
             let result = roundOff(operate(equation), 2);
             document.querySelector('.screen').innerHTML = result;
             equation = new Array();
-            currNum = "";
+            currNum = result;
             return;
     }
     equation.push(currNum);
